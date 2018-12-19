@@ -1,12 +1,15 @@
 # Python CyberArk module
-The module implements few CyberArk API functions.
+
+The module, forked from iamtrump/python-cyberark, implements few CyberArk API functions. The only difference is that in this version we skip certificate validation. This fork is meant to be used in lab environments; I suggest using the original python-cyberark module.
+
 ## Requirements
 * CyberArk 9.3+
 ## Installation
 ```
-pip install git+https://github.com/iamtrump/python-cyberark.git
+pip install git+https://github.com/LikeZer0/python-cyberark.git
 ```
 ## Code example
+
 ```
 import cyberark
 

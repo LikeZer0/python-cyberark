@@ -16,7 +16,7 @@ class CyberArk:
       "useRadiusAuthentication": "false",
       "connectionNumber": connection_number
     }
-    response = requests.post(url, data=json.dumps(data), headers=headers)
+    response = requests.post(url, verify=False, data=json.dumps(data), headers=headers)
     response.raise_for_status()
     self.baseurl = baseurl
     self._token = response.json()["CyberArkLogonResult"]
@@ -27,19 +27,19 @@ class CyberArk:
 
   def logoff(self):
     url = self.baseurl+"/PasswordVault/WebServices/auth/Cyberark/CyberArkAuthenticationService.svc/Logoff"
-    response = requests.post(url, headers=self._headers)
+    response = requests.post(url, verify=False, headers=self._headers)
     response.raise_for_status()
     return response.json()
 
   def list_safes(self):
     url = self.baseurl+"/PasswordVault/WebServices/PIMServices.svc/Safes"
-    response = requests.get(url, headers=self._headers)
+    response = requests.get(url, verify=False, headers=self._headers)
     response.raise_for_status()
     return response.json()
 
   def get_safe_details(self, safe):
     url = self.baseurl+"/PasswordVault/WebServices/PIMServices.svc/Safes/"+safe
-    response = requests.get(url, headers=self._headers)
+    response = requests.get(url, verify=False, headers=self._headers)
     response.raise_for_status()
     return response.json()
 
@@ -49,13 +49,13 @@ class CyberArk:
       "Keywords": criteria,
       "Safe": safe
     }
-    response = requests.get(url, headers=self._headers, params=query)
+    response = requests.get(url, verify=False, headers=self._headers, params=query)
     response.raise_for_status()
     return response.json()
 
   def delete_account(self, account_id):
     url = self.baseurl+"/PasswordVault/WebServices/PIMServices.svc/Accounts/"+account_id
-    response = requests.delete(url, headers=self._headers)
+    response = requests.delete(url, verify=False, headers=self._headers)
     response.raise_for_status()
     return response.text
 
@@ -80,12 +80,12 @@ class CyberArk:
     for k, v in properties.items():
       prop = {"Key": k, "Value": v}
       data["account"]["properties"].append(prop)
-    response = requests.post(url, data=json.dumps(data), headers=self._headers)
+    response = requests.post(url, verify=False, data=json.dumps(data), headers=self._headers)
     response.raise_for_status()
     return response.text
 
   def get_account_value(self, account_id):
     url = self.baseurl+"/PasswordVault/WebServices/PIMServices.svc/Accounts/"+account_id+"/Credentials"
-    response = requests.get(url, headers=self._headers)
+    response = requests.geturl, headers=self._headers)
     response.raise_for_status()
     return response.text
